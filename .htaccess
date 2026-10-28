@@ -8,6 +8,12 @@
 # ----------------------------------------------------------
 AddDefaultCharset UTF-8
 
+# ----------------------------------------------------------
+#  Home Page
+#  Only index.html is used as a folder's home page (no PHP)
+# ----------------------------------------------------------
+DirectoryIndex index.html
+
 AddType image/svg+xml .svg
 AddType image/webp    .webp
 AddType font/woff2    .woff2
@@ -42,23 +48,26 @@ AddType font/woff     .woff
 </IfModule>
 
 # ----------------------------------------------------------
-#  Clean Trailing Slash for Location Subfolders
-#  Ensures /kochi  →  /kochi/  and  /bangalore  →  /bangalore/
+#  Location Pages (single folder)
+#  bangalore.html and kochi.html live in the root and are served
+#  at takees.in/bangalore and takees.in/kochi (no trailing slash,
+#  so their relative css/js/asset paths resolve to the root)
 # ----------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Redirect /kochi (no slash) → /kochi/
-  RewriteCond %{REQUEST_URI} ^/kochi$
-  RewriteRule ^ /kochi/ [R=301,L]
+  # Visiting /bangalore.html or /kochi.html directly → the clean address
+  RewriteCond %{THE_REQUEST} \s/+(bangalore|kochi)\.html[\s?]
+  RewriteRule ^ /%1 [R=301,L]
 
-  # Redirect /bangalore (no slash) → /bangalore/
-  RewriteCond %{REQUEST_URI} ^/bangalore$
-  RewriteRule ^ /bangalore/ [R=301,L]
+  # Old folder addresses: /bangalore/ and /bangalore/index.html → /bangalore
+  RewriteRule ^(bangalore|kochi)/(index\.html)?$ /$1 [R=301,L]
 
-  # Serve index.html for bare subfolder requests (if not already served)
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^(.+[^/])$ $1/ [R=301,L]
+  # Old folder pages (about, services, method, …) → the shared root page
+  RewriteRule ^(?:bangalore|kochi)/([a-z-]+\.html)$ /$1 [R=301,L]
+
+  # Serve the clean address from the root file
+  RewriteRule ^(bangalore|kochi)$ /$1.html [L]
 </IfModule>
 
 # ----------------------------------------------------------

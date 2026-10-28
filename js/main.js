@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFormValidation();
   initSmoothScroll();
   initBlogFilter();
+  initPricing();
 
   // Premium Marketing Agency Motion Suite
   initHeroHeadlineReveal();
@@ -28,6 +29,36 @@ function clearLegacyThemePreference() {
   } catch (error) {
     console.warn('Unable to clear the saved theme preference.', error);
   }
+}
+
+/**
+ * Services pricing: the Standard / Plus switch swaps every card (and its
+ * WhatsApp message) to the matching plan.
+ */
+function initPricing() {
+  const section = document.getElementById('pricing');
+  if (!section) return;
+
+  const switches = section.querySelectorAll('.pricing-switch-btn');
+  const ctas = section.querySelectorAll('.pricing-cta');
+
+  const setType = (type) => {
+    const isPlus = type === 'plus';
+    section.classList.toggle('is-plus', isPlus);
+    switches.forEach(btn => {
+      const active = btn.dataset.planType === type;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+    ctas.forEach(cta => {
+      const plan = cta.dataset.plan + (isPlus ? ' Plus' : '');
+      const url = new URL(cta.href);
+      url.searchParams.set('text', `Hi Takees Marketing, I'm interested in the ${plan} plan.`);
+      cta.href = url.toString();
+    });
+  };
+
+  switches.forEach(btn => btn.addEventListener('click', () => setType(btn.dataset.planType)));
 }
 
 /**
@@ -161,13 +192,13 @@ function highlightActiveNav() {
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
   const navLinks = document.querySelectorAll('.nav-link');
 
+  // Pages without their own menu item (e.g. blog-details.html) keep the
+  // active link set in their markup.
+  const hasMatch = [...navLinks].some(link => link.getAttribute('href') === currentPath);
+  if (!hasMatch) return;
+
   navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPath || (currentPath === '' && href === 'index.html')) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
-    }
+    link.classList.toggle('active', link.getAttribute('href') === currentPath);
   });
 }
 

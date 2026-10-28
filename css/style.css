@@ -519,16 +519,6 @@ h1, h2, h3, h4, h5, h6,
   transform: translateY(0);
 }
 
-.home-hero .hero-content > .kicker,
-.home-hero .hero-content > .hero-heading,
-.home-hero .hero-content > .hero-description,
-.home-hero .hero-content > .hero-actions {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
-  animation: none !important;
-}
-
 .home-hero .hero-heading-line,
 .home-hero .hero-heading-line-inner {
   display: inline;
@@ -2753,9 +2743,6 @@ select.form-control {
   background-color: var(--dark);
   color: #ffffff;
 
-
-
-
   padding: 80px 0 30px;
   border-top: 1px solid #1c1e28;
 }
@@ -3876,7 +3863,6 @@ section[id] {
   }
 }
 
-
 /* Word-by-Word Hero Headline Reveal */
 .word-wrap {
   display: inline-block;
@@ -4075,7 +4061,6 @@ section[id] {
     display: none !important;
   }
 }
-
 
 /* --------------------------------------------------------------------------
    HOME HERO — EDITORIAL GROWTH SYSTEM
@@ -4680,8 +4665,6 @@ section[id] {
   }
 }
 
-
-
 /* ==========================================================================
    HERO EDITORIAL VISUAL – Full-Width Brand Image
    Large editorial image spanning ~92% of section width
@@ -4887,5 +4870,266 @@ section[id] {
   .word-inner {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SERVICES PRICING
+   -------------------------------------------------------------------------- */
+.pricing-section {
+  background: var(--bg-subtle);
+  scroll-margin-top: var(--header-height);
+}
+
+.pricing-switch {
+  display: flex;
+  width: fit-content;
+  margin: 0 auto 40px;
+  padding: 5px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  background: #ffffff;
+}
+
+.pricing-switch-btn {
+  padding: 10px 28px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-body);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.pricing-switch-btn.is-active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.pricing-switch-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  padding: 36px 30px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: #ffffff;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.pricing-name {
+  color: inherit;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.pricing-tagline {
+  margin: 8px 0 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.pricing-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  margin: 0 0 30px;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-features li {
+  position: relative;
+  padding-left: 28px;
+  color: var(--text-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.pricing-features li::before {
+  content: '✓';
+  position: absolute;
+  top: 1px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pricing-features .pricing-extra {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Plus-only extras: filled "+" icon and a PLUS badge */
+.pricing-features .pricing-extra::before {
+  content: "+";
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.pricing-features .pricing-extra::after {
+  content: "PLUS";
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  vertical-align: 2px;
+}
+
+.pricing-cta {
+  justify-content: center;
+  width: 100%;
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.pricing-cta:hover {
+  background: var(--primary-hover);
+  color: #ffffff;
+}
+
+/* Plus plans use the brand-book mint button */
+.pricing-section.is-plus .pricing-cta {
+  background: #71d1c7;
+  color: var(--text-main);
+}
+
+.pricing-section.is-plus .pricing-cta:hover {
+  background: #5cc4b9;
+  color: var(--text-main);
+}
+
+/* Standard / Plus content swap */
+.pricing-section .plan-plus-only,
+.pricing-section.is-plus .plan-standard-only {
+  display: none;
+}
+
+.pricing-section.is-plus .plan-plus-only {
+  display: revert;
+}
+
+.pricing-note {
+  max-width: 720px;
+  margin: 36px auto 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (max-width: 992px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HOME HERO MOTION: staggered fade-up, soft purple glow, purple city name
+   (the heading itself keeps the word-by-word reveal from main.js)
+   -------------------------------------------------------------------------- */
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroGlowDrift {
+  0% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-46%, -54%) scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-54%, -47%) scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+#homeHero .hero-content > .kicker {
+  animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+
+#homeHero .hero-content > .hero-description {
+  animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+#homeHero .hero-content > .hero-actions {
+  animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+}
+
+.hero-ambient-glow {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  z-index: 0;
+  width: min(680px, 90vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(91, 43, 181, 0.16) 0%, rgba(139, 92, 246, 0.08) 45%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: heroGlowDrift 16s ease-in-out infinite alternate;
+}
+
+.hero-highlight {
+  position: relative;
+  display: inline-block;
+  color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #homeHero .hero-content > .kicker,
+  #homeHero .hero-content > .hero-description,
+  #homeHero .hero-content > .hero-actions,
+  .hero-ambient-glow {
+    animation: none;
   }
 }

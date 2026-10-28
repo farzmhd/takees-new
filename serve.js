@@ -19,11 +19,18 @@ const MIME_TYPES = {
 const server = http.createServer((req, res) => {
   let reqUrl = req.url.split('?')[0].replace(/%20/g, ' ');
 
-  // Location sites live in subfolders (kochi/, bangalore/)
-  if (!reqUrl.endsWith('/') && !path.extname(reqUrl) &&
-      fs.existsSync(path.join(__dirname, reqUrl, 'index.html'))) {
-    res.writeHead(301, { Location: reqUrl + '/' });
-    return res.end();
+  // Location pages live in the root (bangalore.html, kochi.html) and are
+  // served at /bangalore and /kochi, mirroring the rules in .htaccess
+  const redirect = (to) => {
+    res.writeHead(301, { Location: to });
+    res.end();
+  };
+  const location = reqUrl.match(/^\/(bangalore|kochi)(\/.*)?$/);
+  if (location) {
+    const [, city, rest] = location;
+    if (rest === undefined) reqUrl = `/${city}.html`;
+    else if (rest === '/' || rest === '/index.html') return redirect(`/${city}`);
+    else if (/^\/[a-z-]+\.html$/.test(rest)) return redirect(rest);
   }
   if (reqUrl.endsWith('/')) reqUrl += 'index.html';
 

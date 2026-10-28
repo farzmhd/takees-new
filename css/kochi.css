@@ -1,0 +1,24 @@
+/* Kochi-only styles kept on top of the shared Kannur stylesheet. */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The Kochi home page shows four stats instead of Kannur's five */
+.stats-grid-5.stats-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 992px) {
+  .stats-grid-5.stats-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
